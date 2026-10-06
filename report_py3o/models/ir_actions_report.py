@@ -116,13 +116,13 @@ class IrActionsReport(models.Model):
 
     @api.depends("report_type", "py3o_filetype")
     def _compute_is_py3o_native_format(self):
-        fmt = Formats()
+        fmt = Formats
         for rec in self:
             rec.is_py3o_native_format = False
             if not rec.report_type == "py3o" or not rec.py3o_filetype:
                 continue
             filetype = rec.py3o_filetype
-            rec.is_py3o_native_format = fmt.get_format(filetype).native
+            rec.is_py3o_native_format = fmt().get_format(filetype).native
 
     def _compute_lo_bin_path(self):
         lo_bin = self._get_lo_bin()
